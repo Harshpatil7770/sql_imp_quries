@@ -1,0 +1,203 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+[employee]
+ employee_id    employee_name    address    
+1	        Harshawardhan 	 mohol	          
+2	        pruthviraj	 solapur	  
+3	        sagar	         karjat	       
+4	        kumar	         pune	         
+5	        ram	         surat	
+6	        sagar	         karjat	 
+
+[department]
+department_no     department_name     employee_id    department_location
+1	              HR	       1	           mohol
+2	              Delivery	       2	           Solapur
+3	              Marketing	       3	           Daryapur
+4	              R&D	       4	           Vardha
+
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+=======================================================================================================================================================
+****************************************JOIN*****************
+Join is used to combine two or more tables based on their related columns
+========================================================================================================================================================
+*************************************** Inner Join ************************** 
+Inner Join return all common record between the  two tables
+
+
+select * from employee e inner join department d on e.employee_id=d.employee_id;
+
+1	Harshawardhan	mohol	1	HR       	1	mohol
+2	pruthviraj      solapur	2	Delivery	2	Solapur
+3	sagar	        karjat	3	Marketing	3	Daryapur
+4	kumar	        pune	4	R&D	        4	Vardha
+
+
+
+=========================================================================================================================================================
+***************************************Left Outer Join****************************
+Left outer join return all the records from left tables even no match with right tables
+
+select employee.employee_id,employee_name,address,department_name from employee left outer join department on employee.employee_id=department.employee_id;
+
+1	Harshawardhan	 mohol	       HR
+2	pruthviraj	 solapur       Delivery
+3	sagar	         karjat	       Marketing
+4	kumar	         pune	       R&D
+5	ram	         surat	
+6	sagar	         karjat	
+
+
+
+
+=========================================================================================================================================================
+***************************************Right Outer Join****************************
+Right outer join return all the records from Right tables even no match with left tables
+
+select employee.employee_id,employee_name,department_name,department_location from employee right outer join
+department on employee.employee_id=department.employee_id;
+
+1	Harshawardhan	   HR        	 mohol
+2	pruthviraj	   Delivery	 Solapur
+3	sagar	           Marketing	 Daryapur
+4	kumar	           R&D	         Vardha
+
+
+==========================================================================================================================================================
+find out the employee name who is working on deparment with their same address location as well as deparatment location ??
+
+select employee.employee_id,employee_name from employee inner join department on employee.employee_id=department.employee_id 
+where employee.address=department.department_location;
+
+1	Harshawardhan
+2	pruthviraj
+
+
+
+==========================================================================================================================================================
+TO FIND DUPLICATE RECORDS IN THE TABLES
+
+select employee_name,address, count(*) from employee group by employee_name,address having count(*)>1
+
+sagar	karjat	2
+
+
+
+===========================================================================================================================================================
+ 
+Find out employee name based on their address
+
+select employee_name from employee where address='karjat';
+
+sagar
+sagar
+
+============================================================================================================================================================
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+employee
+[employee_id]     [employee_name]          [address]     [salary]
+1	            Harshawardhan	   mohol	   30000
+2	            pruthviraj	           solapur         30004
+3	            sagar	           karjat	   59033
+4	            kumar	           pune	           48403
+5	            ram	                   surat	   49303
+6	            sagar	           karjat	   43933
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+=============================================================================================================================================================
+Find out max salary
+
+select max(salary) from employee;
+
+59033
+==============================================================================================================================================================
+Find out min salart
+select min(salary) from employee;
+
+30000
+==============================================================================================================================================================
+Find out avg salary
+select avg(salary) from employee
+
+43446
+==============================================================================================================================================================
+Find out second higest salary
+select max(salary) from employee where salary<(select max(salary) from employee);
+
+49303
+==============================================================================================================================================================
+Find out third higest salary
+select salary from employee order by salary desc limit 2,1;
+
+Find out Second Higest Salary
+select salary from employee order by salary desc limit 1,1;
+
+Find out fourth higest salary
+select salary from employee order by salary desc limit 3,1;
+
+=======================================================
+select * from employee order by salary desc limit 2,1;
+select * from employee order by salary desc limit 1,1;
+select * from employee order by salary desc limit 3,1;
+========================================================
+
+
+==============================================================================================================================================================
+Even records
+select employee_id from employee where mod(employee_id,2)=0;
+
+odd records
+select employee_id from employee where mod(employee_id,2)=1;
+==============================================================================================================================================================
+Minimum no of Employee id
+
+select * from employee where employee_id=(select max(employee_id) from employee);
+
+Maximum no of Employee id
+
+select * fromm employee where employee_id=(select min(employee_id) from employee);
+
+==============================================================================================================================================================
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+[employee]
+[employee_id]    [employee_name]        [address]    
+1	           Harshawardhan 	  mohol	          
+2	           pruthviraj	          solapur	  
+3	           sagar	          karjat	       
+4	           kumar	          pune	         
+5	           ram	                  surat	
+6	           sagar	          karjat	 
+
+[department]
+[department_no]    [department_name]  [employee_id]  [department_location]
+1	              HR	            1	           mohol
+2	              Delivery	            2	           Solapur
+3	              Marketing	            3	           Daryapur
+4	              R&D	            4	           Vardha
+5                     HR                    6              Pune
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+find out last three records entered
+
+select * from( select * from employee order by employee_id desc limit 3) temp order by employee_id asc;
+
+4	kumar	      pune	    48403
+5	ram	      surat	    49303
+6	sagar	      karjat 	    43933
+
+===========================================================================================================================================================
